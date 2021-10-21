@@ -115,7 +115,7 @@ def CategoryListView(request):
         categories.append(category[0])
     return render(request, 'blog/categories_list.html', {'categories': categories})
 
-class UserPostListView(ListView):
+class UserPostListView(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'blog/user_posts.html'
     context_object_name = 'posts'
@@ -143,7 +143,7 @@ class UserPostListView(ListView):
         context['followed'] = followed
         return context
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
     def get_context_data(self, *args, **kwargs):
