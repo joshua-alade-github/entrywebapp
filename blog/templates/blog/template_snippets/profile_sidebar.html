@@ -1,0 +1,36 @@
+{% load static %}
+<div class="col-md-4">
+  <div class="content-section">
+    {% if object.author.profile.image %}
+    <img class="article-img img-thumbnail mx-auto d-block" style="height: 250px; width: 100%; display: block;" src="{{ object.author.profile.image.url }}">
+    {% endif %}
+    <h3>{{ object.author }}</h3>
+    <p class='text-muted'>{{ object.author.profile.name }}
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-light">{{ object.author.profile.birth_date | default:"Birth date" }}</li>
+        <li class="list-group-item list-group-item-light">no. of posts</li>
+        <li class="list-group-item list-group-item-light">{{ object.author.profile.location | default:"Location" }}</li>
+        <li class="list-group-item list-group-item-light">{{ object.author.profile.occupation | default:"Occupation" }}</li>
+        <li class="list-group-item list-group-item-light">{{ object.author.profile.bio | default:"Bio" }}</li>
+
+        <li class="list-group-item list-group-item-light">follow button</li>
+      </ul>
+    </p>
+    {%  if user.profile is not None and user.profile.id != user.id  and user.username != '' %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <button style="margin-left: 18px" class="btn btn-sm btn-outline-primary"
+                    name="{% if can_follow %}follow{% else %}unfollow{% endif %}"
+                    type="submit">
+                 {% if can_follow %}
+                     FOLLOW
+                 {% else %}
+                     UNFOLLOW
+                 {% endif %}
+            </button>
+        </div>
+    </form>
+     {% endif %}
+  </div>
+</div>

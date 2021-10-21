@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+  {% include "blog/template_snippets/profile_sidebar_user.html" %}
+{% endblock sidebar %}
+
+{% block content %}
+    <h1 class="mb-3">Posts by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
+    {% for post in posts %}
+    {% include "blog/template_snippets/post_card.html" %}
+    {% endfor %}
+    {% if is_paginated %}
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+    {% endif %}
+
+    <div id="popup1" class="overlay" style="display: none;">
+    	<div class="popup">
+    		<h3>Are you sure you want to unfollow {{ view.kwargs.username }}?</h3>
+    		<div class="content">
+          <form action="{% url 'follow-unfollow-view' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="profile_id" value={{ profile.user.id }}>
+            <button style="margin-left: 18px; margin-bottom: 5px"
+                    class="btn btn-m btn-outline-primary"
+                    type="submit"
+                    id="follow-btn">
+              Yeah, Unfollow
+            </button>
+          </form>
+          <div class="btn btn-m">
+            <button style="background-color: #1b1c1d;
+                           color: #fff;
+                           text-shadow: none;
+                           background-image: none;
+                           padding: .375rem .75rem;
+                           border-radius: .25rem;"
+                    onclick="unfollow_overlay_func()">
+                No, Don't Unfollow
+            </button>
+          </div>
+    		</div>
+    	</div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+  <script>
+    function unfollow_overlay_func() {
+    var x = document.getElementById("popup1");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+  </script>
+{% endblock scripts %}

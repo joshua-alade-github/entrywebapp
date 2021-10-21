@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+    <script type='text/javascript'>
+      $(document).one('ready', function () {
+        $('#div_id_video_path').hide();
+        $('#div_id_image').hide();
+        });
+
+      $(document).ready(function(){
+        $("#id_post_type").change(function() {
+          if ($(this).val() == "POST") {
+            $('#div_id_content').show();
+            $('#div_id_video_path').hide();
+            $('#div_id_image').hide();
+          } else if ($(this).val() == "VID") {
+            $('#div_id_video_path').show();
+            $('#div_id_image').hide();
+            $('#div_id_content').hide();
+          } else if ($(this).val() == "IMG") {
+            $('#div_id_image').show();
+            $('#div_id_video_path').hide();
+            $('#div_id_content').hide();
+          }
+        });
+      });
+      $("#id_post_type").trigger("change");
+    </script>
+    <div class="content-section">
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Blog Post</legend>
+            {{ form.media }}
+            {{ form | crispy }}
+        </fieldset>
+        <div class="form-group">
+            <button class="btn btn-outline-info" type="submit">Post</button>
+        </div>
+      </form>
+    </div>
+{% endblock content %}

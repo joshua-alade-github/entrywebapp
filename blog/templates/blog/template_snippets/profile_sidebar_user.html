@@ -1,0 +1,47 @@
+{% load static %}
+<div class="col-md-4">
+  <div class="content-section">
+    {% if profile.image %}
+    <img class="article-img img-thumbnail mx-auto d-block" style="height: 250px; width: 100%; display: block;" src="{{ profile.image.url }}">
+    {% endif %}
+    <h3>{{ profile.user.username }}</h3>
+    <p class='text-muted'>{{ profile.name }}
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-light">Birth date: {{ profile.birth_date }}</li>
+        <li class="list-group-item list-group-item-light">no. of posts: </li>
+        <li class="list-group-item list-group-item-light">Location: {{ profile.location }}</li>
+        <li class="list-group-item list-group-item-light">Occupation: {{ profile.occupation }}</li>
+        <li class="list-group-item list-group-item-light">Bio: {{ profile.bio }}</li>
+        <li class="list-group-item list-group-item-light"><a class="mr-2" href="{% url 'following-list' view.kwargs.username %}">Following: {{ profile.user.following.all.count }}</a></li>
+        <li class="list-group-item list-group-item-light"><a class="mr-2" href="{% url 'followers-list' view.kwargs.username %}">Followers: {{ profile.user.followers.all.count }}</a></li>
+        <li class="list-group-item list-group-item-light"><a class="mr-2" href="{% url 'liked-list' view.kwargs.username %}">Liked Posts</a></li>
+        {% if request.user != profile.user %}
+        <li class="list-group-item list-group-item-light">
+          {% if followed %}
+          <button style="margin-left: 18px"
+                  class="btn btn-sm btn-outline-primary"
+                  id="follow-btn"
+                  onclick="unfollow_overlay_func()">
+            UNFOLLOW
+          </button>
+          {% else %}
+          <form action="{% url 'follow-unfollow-view' %}" method="POST">
+            {% csrf_token %}
+              <input type="hidden" name="profile_id" value={{ profile.user.id }}>
+              <button style="margin-left: 18px"
+                      class="btn btn-sm btn-outline-primary"
+                      type="submit"
+                      id="follow-btn">
+                FOLLOW
+              </button>
+          </form>
+          {% endif %}
+        </li>
+        <li class="list-group-item list-group-item-light"><button style="margin-left: 18px" class="btn btn-sm btn-outline-primary"><a class="mr-2" href="{% url 'newconversation' profile.user.username %}">Send a message!</a></button></li>
+        {% else %}
+        <li class="list-group-item list-group-item-light"><button style="margin-left: 18px" class="btn btn-sm btn-outline-primary"><a class="mr-2" href="{% url 'profile' %}">Edit Profile</a></button></li>
+        {% endif %}
+      </ul>
+    </p>
+  </div>
+</div>

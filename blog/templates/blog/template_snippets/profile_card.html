@@ -1,0 +1,14 @@
+{% load static %}
+<article class="media content-section">
+  {% if profile.image %}
+  <img class="rounded-circle article-img" src="{{ profile.image.url }}">
+  {% endif %}
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2" href="{% url 'user-posts' profile.user.username %}">{{ profile.user }}</a>
+      <small class="text-muted">User since {{ profile.created | date:"F d, Y" }}</small>
+      <small class="text-muted"> | Followers: {{ profile.user.followers.all.count }}</small>
+    </div>
+    <p class="article-content">{{ profile.bio | default:"no bio"}}</p>
+  </div>
+</article>

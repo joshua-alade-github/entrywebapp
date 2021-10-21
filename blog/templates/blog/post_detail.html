@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block sidebar %}
+{% endblock sidebar %}
+
+{% block content %}
+      {% include "blog/template_snippets/post_detail_snippet.html" %}
+      {% include "blog/template_snippets/comment_section.html" %}
+{% endblock content %}
