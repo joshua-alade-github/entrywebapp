@@ -47,7 +47,7 @@ def get_post_queryset(query=None):
 
     return list(set(queryset))
 
-class SearchView(LoginRequiredMixin, TemplateView):
+class SearchView(TemplateView):
     template_name = 'search_posts.html'
 
     def get(self, request, *args, **kwargs):
@@ -58,7 +58,7 @@ class SearchView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         return super().get_context_data(results=self.results, resultsCount = self.results.count(), **kwargs)
 
-class SearchUserView(LoginRequiredMixin, TemplateView):
+class SearchUserView(TemplateView):
     template_name = 'search_profiles.html'
     context_object_name = 'profiles'
     def get(self, request, *args, **kwargs):
@@ -94,7 +94,6 @@ class PostListView(LoginRequiredMixin, ListView):
                 qs = sorted(chain(*posts), reverse=True, key=lambda obj: obj.date_posted)
             return qs
 
-@login_required
 def CategoryView(request, cats):
     category_posts = Post.objects.filter(category=cats).annotate(likes_count=Count('likes')).order_by('-date_posted__date', '-likes_count')
     page = request.GET.get('page', 1)
@@ -109,7 +108,6 @@ def CategoryView(request, cats):
 
     return render(request, 'blog/categories.html', {'cats': cats, 'category_posts': posts})
 
-@login_required
 def CategoryListView(request):
     categories = []
     category_list = Post.CATEGORY_TYPES
@@ -117,7 +115,7 @@ def CategoryListView(request):
         categories.append(category[0])
     return render(request, 'blog/categories_list.html', {'categories': categories})
 
-class UserPostListView(LoginRequiredMixin, ListView):
+class UserPostListView(ListView):
     model = Post
     template_name = 'blog/user_posts.html'
     context_object_name = 'posts'
@@ -145,7 +143,7 @@ class UserPostListView(LoginRequiredMixin, ListView):
         context['followed'] = followed
         return context
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+class PostDetailView(DetailView):
     model = Post
 
     def get_context_data(self, *args, **kwargs):
