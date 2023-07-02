@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', "some value if your key is not in the 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.environ.get('ENTRY_DEBUG_VALUE') == 'True')
 
-ALLOWED_HOSTS =  ['entrywebapp.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS =  ['entrywebapp.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -87,32 +87,32 @@ WSGI_APPLICATION = 'entry_website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
-
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'd4b9ifquvp2pc0',
-
-        'USER': 'hkopzaygbkkarf',
-
-        'PASSWORD': '725463e4b2ed4c5633ef2f3db7ffa90310b53269c6b6fbdc56b920960ffb7bd5',
-
-        'HOST': 'ec2-54-159-175-113.compute-1.amazonaws.com',
-
-        'PORT': '5432',
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-
 }
+
+# DATABASES = {
+
+#     'default': {
+
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+#         'NAME': 'd4b9ifquvp2pc0',
+
+#         'USER': 'hkopzaygbkkarf',
+
+#         'PASSWORD': '725463e4b2ed4c5633ef2f3db7ffa90310b53269c6b6fbdc56b920960ffb7bd5',
+
+#         'HOST': 'ec2-54-159-175-113.compute-1.amazonaws.com',
+
+#         'PORT': '5432',
+
+#     }
+
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
