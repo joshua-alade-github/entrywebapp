@@ -87,32 +87,32 @@ WSGI_APPLICATION = 'entry_website.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
 # DATABASES = {
-
 #     'default': {
-
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-#         'NAME': 'd4b9ifquvp2pc0',
-
-#         'USER': 'hkopzaygbkkarf',
-
-#         'PASSWORD': '725463e4b2ed4c5633ef2f3db7ffa90310b53269c6b6fbdc56b920960ffb7bd5',
-
-#         'HOST': 'ec2-54-159-175-113.compute-1.amazonaws.com',
-
-#         'PORT': '5432',
-
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
-
 # }
+
+DATABASES = {
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+
+        'NAME': os.environ.get('ENTRY_SUPABASE_NAME'),
+
+        'USER': os.environ.get('ENTRY_SUPABASE_USER'),
+
+        'PASSWORD': os.environ.get('ENTRY_SUPABASE_PASS'),
+
+        'HOST': 'db.kkjsgkdtcopqijceisrn.supabase.co',
+
+        'PORT': '5432',
+
+    }
+
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
