@@ -106,7 +106,7 @@ DATABASES = {
 
         'PASSWORD': os.environ.get('ENTRY_SUPABASE_PASS'),
 
-        'HOST': 'db.kkjsgkdtcopqijceisrn.supabase.co',
+        'HOST': os.environ.get('ENTRY_SUPABASE_HOST'),
 
         'PORT': '5432',
 
